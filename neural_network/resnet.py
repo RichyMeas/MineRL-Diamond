@@ -11,12 +11,12 @@ import torch
 import torch.nn as nn
 import torchvision.models as md
 
-resnet = md.resnet18(pretrained=True)
-print(resnet)
+# print(resnet)
 
-class Resnet_1:
+class Resnet_1(nn.Module):
   def __init__(self, action_space, input_shape, features):
     super(Resnet_1, self).__init__()
+    resnet = md.resnet18(pretrained=True)
 
     self.conv1 = resnet.conv1
     self.bn1 = resnet.bn1
@@ -32,14 +32,14 @@ class Resnet_1:
 
     self.actor = nn.Sequential(
         nn.Linear(n_flatten, features),
-        nn.Relu(),
+        nn.ReLU(),
         nn.Linear(features, action_space)
     )
 
     self.critic = nn.Sequential(
         nn.Linear(n_flatten, features),
-        nn.Relu(),
-        nn.Linear(features ,1)
+        nn.ReLU(),
+        nn.Linear(features, 1)
     )
 
 
